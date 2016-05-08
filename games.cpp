@@ -1,48 +1,51 @@
 #include<bits/stdc++.h>
 
-
-int check(float f){
-	if (f*100<1){
-		return 1;
+int r_digit(float n){
+	int i=0;
+	float p;
+	p=n-floor(n);
+	n=p;
+	while(n){
+		i++;
+		n*=10;
+		p=n-floor(n);
+		n=p;
 	}
-	return 0;
+	return i;
+}
+
+	int self_gcd(int a,int b){
+	int temp;
+	if (a<b){
+		temp=a;
+		a=b;
+		b=temp;
+	}
+	if(a%b==0){
+		return b;
+	}
+	else{
+		return self_gcd(b,a%b);
+	}
 }
 
 int main(){
-	int i,p,num[10],den[10],temp,t;
-	float f,n;
+	int power1,t,k;
+	float n,f;
 	std::cin>>t;
 	while(t--){
-		i=-1;
 		std::cin>>n;
-		f=n-floor(n);
-		p=check(f);
-		if(p){
-			std::cout<<floor(n)<<"\n";
+		n=floor(n*10000)/10000;
+		power1=r_digit(n);
+		if (!power1){
+			std::cout<<"1"<<"\n";
 			continue;
 		}
-		while(!p&&i<10){
-			i++;
-			n=1/f;
-			num[i]=floor(n);
-			den[i]=1;
-			f=n-floor(n);
-			p=check(f);
-			
+		else{
+			k=pow(10,power1);
+			n*=k;
+			std::cout<<(k/self_gcd(k,n))<<"\n";
 		}
-		temp=num[i];
-		num[i]=den[i];
-		den[i]=temp;
-		i--;
-		while(i>=0){
-			num[i]=num[i]*den[i+1] +num[i+1];
-			den[i]=den[i+1];
-			temp=num[i];
-			num[i]=den[i];
-			den[i]=temp;
-			i--;
-		}
-		std::cout<<den[0]<<"\n";
 	}
 	return 0;
 }
