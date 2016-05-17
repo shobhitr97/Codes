@@ -3,10 +3,12 @@ char **city;
 struct cit{
 	char dir;
 	struct cit* next;
-	struct cit *prev;
+	struct cit* prev;
 };
 struct cit* head=NULL;
-
+void dir(int x,int y){
+	std::cout<<city[x][y]<<"\n";
+}
 struct cit *lsearch(char dirn){
 	struct cit *ptr=head;
 	while(ptr->dir!=dirn){
@@ -28,14 +30,14 @@ char chan(char X,int dir){
 	city[i][j]= a->dir;
 }
 */
-void change(int x1,int y1,int x2,int y2,int dir){
+void change(int x1,int y1,int x2,int y2,int dirn){
 	int i,j;
+	struct cit *a;
 	for(i=x1;i<=x2;i++){
 		for(j=y1;j<=y2;j++){
-	
-			struct cit *a;
+			
 			a=lsearch(city[i][j]);
-			if(dir==0){
+			if(dirn==0){
 				a=a->next;
 			}
 			else{
@@ -55,15 +57,15 @@ struct cit *alloca(){
 	ptr1=(struct cit*)malloc(sizeof(struct cit));
 	ptr1->dir ='E';
 	ptr1->next =NULL;
-	ptr->prev=NULL;
+	ptr1->prev=NULL;
 	ptr2=(struct cit*)malloc(sizeof(struct cit));
 	ptr2->dir ='S';
 	ptr2->next =NULL;
-	ptr->prev=NULL;
+	ptr2->prev=NULL;
 	ptr3=(struct cit*)malloc(sizeof(struct cit));
 	ptr3->dir ='W';
 	ptr3->next =NULL;
-	ptr->prev=NULL;
+	ptr3->prev=NULL;
 	ptr3->next=ptr;
 	ptr->prev=ptr3;
 	ptr->next=ptr1;
@@ -96,7 +98,7 @@ int main(){
 		switch(k){
 			case 'D':   int x,y;
 						std::cin>>x>>y;
-						std::cout<<city[x-1][y-1]<<"\n";
+						dir(x-1,y-1);
 						break;
 			case 'C':	int x1,y1,x2,y2,dirnn;
 						std::cin>>x1>>y1>>x2>>y2>>dirnn;

@@ -34,8 +34,7 @@ int main(){
 	float n,f;
 	std::cin>>t;
 	while(t--){
-		std::cin>>n;
-		n=floor(n*10000)/10000;
+		std::cin>>std::setprecision(4)>>n;
 		power1=r_digit(n);
 		if (!power1){
 			std::cout<<"1"<<"\n";

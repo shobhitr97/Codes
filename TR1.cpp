@@ -17,5 +17,7 @@ int main(){
 		std::cin>>x>>y;
 		a[x][y]=1;
 		a[y][x]=1;
-	}
+	}	
+	
+	
 }
