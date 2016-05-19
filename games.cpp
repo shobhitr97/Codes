@@ -1,6 +1,7 @@
 #include<bits/stdc++.h>
 
-int r_digit(float n){
+double r_digit(double n){
+	/*
 	int i=0;
 	float p;
 	p=n-floor(n);
@@ -12,10 +13,19 @@ int r_digit(float n){
 		n=p;
 	}
 	return i;
+	*/
+	int power=0;
+	long long int k;
+	k=n*10*10*10*10;
+	while(!(k%10)){
+		k/=10;
+		power++;
+	}
+	return 4-power;
 }
 
-	int self_gcd(int a,int b){
-	int temp;
+int self_gcd(long long int a,long long int b){
+	long int temp;
 	if (a<b){
 		temp=a;
 		a=b;
@@ -30,11 +40,12 @@ int r_digit(float n){
 }
 
 int main(){
-	int power1,t,k;
-	float n,f;
+	int t,r;
+	double k,power1;
+	float n;
 	std::cin>>t;
 	while(t--){
-		std::cin>>std::setprecision(4)>>n;
+		scanf("%f ",&n);
 		power1=r_digit(n);
 		if (!power1){
 			std::cout<<"1"<<"\n";
@@ -42,8 +53,10 @@ int main(){
 		}
 		else{
 			k=pow(10,power1);
-			n*=k;
-			std::cout<<(k/self_gcd(k,n))<<"\n";
+			printf("%.4f ",n);
+			r=n*k;
+			std::cout<<r<<" "<<k<<" "<<n<<"\n";
+			std::cout<<(k/self_gcd(k,r))<<"\n";
 		}
 	}
 	return 0;
