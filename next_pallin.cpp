@@ -14,6 +14,10 @@ while(t--){
     i=0;
     scanf("%s ",a);
     len=strlen(a);
+    if(len==1&&a[0]=='0'){
+        cout<<"1\n";
+        continue;
+    }
     //cout<<len<<"\n";
     mid=temp=(len-1)/2;
     j=mid+1;
