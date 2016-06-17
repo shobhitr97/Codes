@@ -1,12 +1,14 @@
 #include<iostream>
-#include<stdio>
-#include<stdlib>
+#include<stdio.h>
+#include<stdlib.h>
 #include<string>
 #include<vector>
 
 using namespace std;
 
 class BadNeighbors{
+	vector <int> a;
+	vector <int> b;
 	public:
 	int max(int a,int b){
 		if(a>b){
@@ -15,9 +17,9 @@ class BadNeighbors{
 		return b;
 	}
 	int maxDonations(vector <int> amt){
-		int sz=amt.size();
-		vector <int> a(sz);
-		vector <int> b(sz);
+		int sz=amt.size(),i,max_m;
+		a.resize(sz);
+		b.resize(sz);
 		a[0]=0;
 		a[1]=amt[1];
 		b[0]=amt[0];
@@ -27,18 +29,23 @@ class BadNeighbors{
 			if(i<sz-1)
 				b[i]=max((b[i-2]+amt[i]),(b[i-1]+amt[i]-amt[i-1]));
 		}
-		return max(a[sz-1],b[sz-2]);
+		max_m= max(a[sz-1],b[sz-2]);
+		a.clear(),b.clear();
+		return max_m;
 	}
 };
 
 int main(){
-	int input;
+	int input,t;
 	vector <int> donations;
-	while(cin>>input){
-		donations.push_back(input);
-	}
 	BadNeighbors obj;
-	cout<<obj.maxDonations(donations)<<"\n";
+	while(t--){
+		while(cin>>input){
+			donations.push_back(input);
+		}
+		
+		cout<<obj.maxDonations(donations)<<"\n";
+	}
 	return 0;
 }
 
