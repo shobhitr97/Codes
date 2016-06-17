@@ -4,16 +4,17 @@
 #include<string.h>
 uisng namespace std;
 class ZigZag(){
-	int diff[50],S[50],temp,i,j;
+	int diff[50],S[50],temp,i,j,max;
 	public:
-	int longestZigZag(int *seq){
+	int longestZigZag(int *seq,int n){
 		memset(diff,0,50);
 		memset(S,0,50);
 		diff[0]=0;
 		diff[1]=seq[1]-seq[0];
 		S[0]=0;
 		S[1]=1;
-		for(i=2;seq[i]!='\0';i++){
+		max=0;
+		for(i=2;i<n;i++){
 			temp=0;
 			j=i-1;
 			while(j>=1){
@@ -26,12 +27,22 @@ class ZigZag(){
 				j--;
 			}
 			S[i]=S[i]+1;
+			if(S[i]>max){
+				max=S[i];
+			}
 		}
-		return S[i-1];
+		return max;
 	}
 	
 }
 int main(){
-		
+	int A[51],n,i;
+	cin>>n;
+	for(i=0;i<n;i++){
+		cin>>A[i];
+	}
+	ZigZag obj;
+	cout<<obj.longestZigZag(A,n)<<"\n";
+	
     return 0;
 }
