@@ -29,7 +29,7 @@ class BadNeighbors{
 			if(i<sz-1)
 				b[i]=max((b[i-2]+amt[i]),(b[i-1]+amt[i]-amt[i-1]));
 		}
-		max_m= max(a[sz-1],b[sz-2]);
+		max_m= max(max(a[sz-1],a[sz-2]),max(b[sz-2],b[sz-3]));
 		a.clear(),b.clear();
 		return max_m;
 	}
