@@ -7,12 +7,14 @@ class ZigZag(){
 	int diff[50],S[50],temp,i,j,max;
 	public:
 	int longestZigZag(int *seq,int n){
-		memset(diff,0,50);
-		memset(S,0,50);
+		for(i=0;i<n;i++){
+			diff[i]=0;
+			S[i]=1;
+		}
 		diff[0]=0;
 		diff[1]=seq[1]-seq[0];
 		S[0]=0;
-		S[1]=1;
+		S[1]=2;
 		max=0;
 		for(i=2;i<n;i++){
 			temp=0;
