@@ -1,7 +1,6 @@
 #include<bits/stdc++.h>
 int main(){
 
-
 	int num,i,count,limit,b;
 	
 	std::cin>>b;
@@ -16,6 +15,7 @@ int main(){
 		if(sieve[i]==0){
 			count++;
 			list[count-1]=i;
+			//std::cout<<i;
 			num=i;
 			while(num<=b){
 			sieve[num]=1;

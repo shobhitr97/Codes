@@ -26,7 +26,7 @@ int* prime(int b){
 	free(sieve);
 	return list;
 }
-
+/*
 void fn(int t,int n,int len,int *arr){
 	if (n==10){
 		return ;
@@ -66,6 +66,7 @@ void fn(int t,int n,int len,int *arr){
 		fn(t,n+1,len+1,arr);
 	}
 }
+*/
 int check1(int num){
     int test=0;
 	while(num){
