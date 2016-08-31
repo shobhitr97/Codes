@@ -67,7 +67,7 @@ class Marketing{
 				}
 				ptr_obj=make_obj(i,0);
 				com.push(ptr_obj);
-				while(com.empty()==false){
+				while(com.empty()==false){	
 					//pop objects
 					k=com.top();
 					com.pop();
@@ -103,7 +103,7 @@ int main(){
 			cin>>p;
 			a[i][j]=p;
 			if(p==-1){
-				break;
+				break;	
 			}
 			j++;
 		}
