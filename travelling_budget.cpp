@@ -1,88 +1,67 @@
 #include<iostream>
-#include<queue>
-#include<vector>
 #include<tuple>
-#include<limits.h>
+#include<stack>
+#include<queue>
+#typedef tuple<int,int,int> tup
 
 using namespace std;
-typedef tuple<int,int,int> triple_t;
- 
-int minim(int a,int b){
-	if(a<b){
-		return a;
+
+int len[505][1000];
+int len1[505][505];
+int adj[505][505];    //will store cost as well
+int inc[505];
+
+struct greaterbylength{
+	bool operator()(tup p1,tup p2){
+		return get<3>(tup1)>get<3>(tup2);
 	}
-	return b;
 }
+
+void take_input(){
+	int m,i,u,v,c,l;
+	cin>>m;
+	for(i=0;i<m;i++){
+		cin>>u>>v>>c>>l;
+		adj[u][v]=c;
+		len1[u][v]=l;
+	}
+}
+
+priority_queue <tup,vector<tup>,greaterbylength> qu;
+
 int main(){
-	int t,n,m,B,x,y,u,v,cst,len,q,i,j,min,city,cost,length;
-	int c[505][505];
-	int l[505][505];
-	int a[505][1005];
-	cin>>t;
-	while(t--){
-		cin>>n>>m>>B;
-		for(i=1;i<=n;i++){
-			for(j=0;j<=B;j++){
-				if(i==1){
-					a[i][j]=0;
-				}
-				else{
-					a[i][j]=-1;
-				}
-			}
+	qu.push(make_tuple(1,0,0));
+	while(!qu.empty()){
+		tup t1=qu.top();
+		qu.pop();
+		v=get<1>(t1);
+		length=get<3>(t1);
+		cost=get<2>(t1);
+		if(inc[v]==1){
+			continue;
 		}
-		for(i=1;i<=n;i++){
-			for(j=1;j<=n;j++){
-				c[i][j]=0;
-				l[i][j]=0;
-			}
-		}
-		for(i=0;i<m;i++){
-			cin>>u>>v>>cst>>len;
-			c[u][v]=cst,l[u][v]=len;
-		}
-	}
-	queue< triple_t > cities;
-	
-	cities.push(make_tuple(1,0,0));
-	while(!cities.empty()){
-		triple_t obj=cities.front();
-		cities.pop();
-		city=get<0>(obj);
-		cout<<city<<"\n";
-		cost=get<1>(obj);
-		length=get<2>(obj);
-		for(i=1;i<=n;i++){
-			if(city!=i&&c[city][i]!=0){
-				if(cost+c[city][i]<=y){
-					if(a[i][cost+c[city][i]]!=-1){
-						if(a[i][cost+c[city][i]]>length+l[city][i]){
-							a[i][cost+c[city][i]]=length+l[city][i];
-							cities.push(make_tuple(i,cost+c[city][i],length+l[city][i]));
-						}
-					}
-					else{
-						a[i][cost+c[city][i]]=length+l[city][i];
-						cities.push(make_tuple(i,cost+c[city][i],length+l[city][i]));
+		inc[v]=1;
+		for(i=1;i<=n;i++){                      //we can iterate i over an array containing the index of vertices that ave been included rather than the inc array
+			if(adj[i][v]!=0&&inc[i]){    		// 0 can be replaced by infinty
+				for(j=1;j<=b;j++){
+					if(len[i][j]!=INT_MAX){
+						if(adj[i][v]+j<b)
+							len[v][j+adj[i][v]]=min(len[v][j+adj[i][v]],len[i][j]+len1[i][v]);
 					}
 				}
 			}
 		}
-	}
-	cin>>q;
-	
-	while(q--){
-		cin>>x>>y;
-		min=INT_MAX;
-		for(i=1;i<=y;i++){
-			min=minim(min,a[x][i]);
+		for(i=1;i<=n;i++){
+			if(adj[v][i]&&!inc[i]){
+				qu.push(make_tuple(i,adj[v][i],len1[v][i]));
+			}
 		}
-		if(min!=INT_MAX)
-			cout<<min<<"\n";
-		else{
-			cout<<"-1\n";
-		}
-		//calculate the answer
 	}
 	return 0;
 }
+first we pick our source vertex 
+then we mark all the adjacent vertices with the rudimentary length their path is going to have(priority queue) 
+then we pick out te verex with the minimum length 
+see all the vertices that direct to it and have already been considered 
+for each of these vertices mark len[v][b]  u all the elements that direct to it(this is to be repeated for every b)
+then again mark all it's adjacent vertices with the value
