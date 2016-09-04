@@ -39,11 +39,10 @@ ll powmod(ll a,ll n){
 void construct_arr(){
 	ll j,x;
 	int i;
-	for(i=3;i<=num;i++){
+	for(i=1;i<=num;i++){
 		arr[i]=1;
 	}
-	arr[1]=1;
-	arr[2]=1;
+	
 	i=2;
 	while(i*i<=num){
 		if(i!=1){
@@ -53,9 +52,7 @@ void construct_arr(){
 		j=i*i;
 		x=arr[i];
 		while(j<=num){
-			if(arr[j+1]==1){
-				arr[j+1]=0;
-			}
+		
 			arr[j+1]+=powmod(x,j);
 			j+=i;
 		}
