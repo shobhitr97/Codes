@@ -7,9 +7,32 @@
 using namespace std;
 int prime[500];
 
-int prime_gen(int n);
+int prime_gen(int n){
+	
+}
 
-int check_validity(int a,int b);
+int check_validity(int a,int b){
+	int max=499,a1,b1,x1,x2=0;
+	a1=min(a,b);
+	for(i=0;i<500&&prime[i]<=a1;i++){
+		if(a1%prime[i]==0){
+			x1=prime[i];
+			break;
+		}
+	}
+	max=x1;
+	b1=max(a,b);
+	for(i=0;prime[i]<=x1;i++){
+		if(b1%prime[i]==0){
+			x2=--prime[i];
+			break;
+		}
+	}
+	if(x2==x1){
+		return 1;
+	}
+	return 0;
+}
 
 int main(){
 

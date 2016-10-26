@@ -3,6 +3,7 @@
 using namespace std;
 
 int calc(int a,int b,int c){
+	int x,y;
 	x=0;
 	y=b%c;
 	while(a>=1){
@@ -13,4 +14,9 @@ int calc(int a,int b,int c){
 		a/=2;
 	}
 	return x;
+}
+
+int main(){
+	
+	return 0;
 }
