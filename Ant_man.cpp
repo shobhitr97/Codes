@@ -113,152 +113,155 @@
 // 	cout<<min_time(S,e,N)<<"\n";
 // 	return 0;
 // }
-#include <iostream>
+	#include<bits/stdc++.h>
+	#include<iostream>
 
-using namespace std;
+	using namespace std;
 
-#define long long int ll
-#define num 5005
+	typedef long long int ll;
+	#define num 5005
 
-int n,s,e;
+	int n,s,e;
 
-bool vis[num];
+	bool vis[num];
 
-ll x[num],a[num],b[num],c[num],d[num],l_r[num],l_l[num],j_l[num],j_r[num],t[num];
+	ll x[num],a[num],b[num],c[num],d[num],l_r[num],l_l[num],j_l[num],j_r[num],t[num];
 
-void input(ll arr[]){
-    int i;
-    for(i=1;i<=n;i++){
-        cin>>arr[i];
-    }
-}
+	void input(ll arr[]){
+	    int i;
+	    for(i=1;i<=n;i++){
+		cin>>arr[i];
+	    }
+	}
 
-void printt(ll arr[]){
-    int i;
-    for(i=1;i<=n;i++){
-        cout<<arr[i]<<"\n";
-    }
-}
+	void printt(ll arr[]){
+	    int i;
+	    for(i=1;i<=n;i++){
+		cout<<arr[i]<<"\n";
+	    }
+	}
 
-ll min(ll a,ll b){
-    if(a<b){
-        return a;
-    }
-    return b;
-}
+	ll min(ll a,ll b){
+	    if(a<b){
+		return a;
+	    }
+	    return b;
+	}
 
-int main()
-{
-   cin>>n>>s>>e;
-   
-   int i;
-   
-   input(x);
-   input(a);
-   input(b);
-   input(c);
-   input(d);
-   
-   for(i=1;i<=n;i++){
-        l_r[i]=b[i]-x[i];
-        l_l[i]=x[i]+a[i];
-        j_l[i]=x[i]+c[i];
-        j_r[i]=d[i]-x[i];
-   }
-   
-   ll minm;
-   
-   for(i=1;i<=n;i++){
-       vis[i]=0;
-       t[i]=-1;
-   }
-   
-   index=s;
-   
-   limit=n-2;
-   
-   t[s]=0;
-   
-   while(limit--){
-       vis[index]=1;
-       minm=-1;
-       for(i=1;i<index;i++){
-           if(vis[i]||i==e){
-               continue;
-           }
-           if(t[i]==-1){
-               t[i] = t[index] + j_l[index] + l_r[i];
-           }
-           else{
-               t[i] = min( t[i] ,t[index] + j_l[index] + l_r[i] );
-           }
-           if(minm==-1){
-               minm=t[i];
-               min_index=i;
-           }
-           else{
-               if(minm>t[i]){
-                   minm=t[i];
-                   min_index=i;
-               }
-           }
-        }
-        
-        for(i=index+1;i<=n;i++){
-            if(vis[i]||i==e){
-                continue;
-            }
-            if(t[i]==-1){
-                t[i] = t[index] + j_r[index] + l_l[i];
-            }
-            else{
-                t[i] = min( t[i] , t[index] + j_r[index] + l_l[i] );
-            }
-            if(minm==-1){
-                minm=t[i];
-            }
-            else{
-                if(t[i]<minm){
-                    min_index=i;
-                    minm=t[i];
-                }
-            }
-        }
-        
-        index=min_index;
-        
-   }
-   
-   if(index>e){
-       t[e]=t[index]+j_l[index]+l_r[e];
-   }
-   else{
-       t[e]=t[index]+j_r[index]+l_l[e];
-   }
-   
-    // minm=-1;
-    // for(i=1;i<e;i++){
-    //     if(minm==-1){
-    //         minm= j_r[i]+l_l[e]+t[i];
-    //     }  
-    //     else{
-    //         minm=min(minm,j_r[i]+l_l[e]+t[i]);
-    //     }
-    // }
-    
-    // for(i=index+1;i<=n;i++){
-    //     if(minm==-1){
-    //         minm=t[i]+j_l[i]+l_r[e];   
-    //     }
-    //     else{
-    //         minm=min(minm,t[i]+j_l[i]+l_r[e]);
-    //     }
-    // }
-    // t[e]=minm
-    
-  
-   cout<<t[e]<<"\n";
-   
-   
-   return 0;
-}
+	int main()
+	{
+	   cin>>n>>s>>e;
+	   
+	   int i,limit,index,min_index;
+	   
+	   input(x);
+	   input(a);
+	   input(b);
+	   input(c);
+	   input(d);
+	   
+	   for(i=1;i<=n;i++){
+		l_r[i]=b[i]-x[i];
+		l_l[i]=x[i]+a[i];
+		j_l[i]=x[i]+c[i];
+		j_r[i]=d[i]-x[i];
+	   }
+	   
+	   ll minm;
+	   
+	   for(i=1;i<=n;i++){
+	       vis[i]=0;
+	       t[i]=-1;
+	   }
+	   
+	   index=s;
+	   
+	   if(n>3){
+		limit=n-1;
+	}
+else{
+	   limit=n-2;
+	}   
+	   t[s]=0;
+	   
+	   while(limit--){
+		cout<<"index:"<<index<<"\n";
+	       vis[index]=1;
+	       minm=-1;
+	       for(i=1;i<index;i++){
+		   if(vis[i]||i==e){
+		       continue;
+		   }
+		   
+		       t[i] = t[index] + j_l[index] + l_r[i];
+		   
+		   
+		   if(minm==-1){
+		       minm=t[i];
+		       min_index=i;
+		   }
+		   else{
+		       if(minm>t[i]){
+		           minm=t[i];
+		           min_index=i;
+		       }
+		   }
+		}
+		
+		for(i=index+1;i<=n;i++){
+		    if(vis[i]||i==e){
+		        continue;
+		    }
+		    
+		        t[i] = t[index] + j_r[index] + l_l[i];
+		    
+		    
+		    if(minm==-1){
+		        minm=t[i];
+			min_index=i;
+		    }
+		    else{
+		        if(t[i]<minm){
+		            min_index=i;
+		            minm=t[i];
+		        }
+		    }
+		}
+		
+		index=min_index;
+		
+	   }
+	   
+	   if(index>e){
+	       t[e]=t[index]+j_l[index]+l_r[e];
+	   }
+	   else{
+	       t[e]=t[index]+j_r[index]+l_l[e];
+	   }
+	   
+	    // minm=-1;
+	    // for(i=1;i<e;i++){
+	    //     if(minm==-1){
+	    //         minm= j_r[i]+l_l[e]+t[i];
+	    //     }  
+	    //     else{
+	    //         minm=min(minm,j_r[i]+l_l[e]+t[i]);
+	    //     }
+	    // }
+	    
+	    // for(i=index+1;i<=n;i++){
+	    //     if(minm==-1){
+	    //         minm=t[i]+j_l[i]+l_r[e];   
+	    //     }
+	    //     else{
+	    //         minm=min(minm,t[i]+j_l[i]+l_r[e]);
+	    //     }
+	    // }
+	    // t[e]=minm
+	    
+	   printt(t); 
+	   cout<<t[e]<<"\n";
+	   
+	   
+	   return 0;
+	}
