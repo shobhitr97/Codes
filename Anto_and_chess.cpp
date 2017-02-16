@@ -18,25 +18,24 @@ int main(){
 	for(i=0;i<n;i++){
 		cin>>charr[i]>>x[i]>>y[i];
 	}
-	// flag=1;
+	flag=0;
 	for(i=0;i<n;i++){
 		switch(charr[i]){
 			case 'B':if( abs(x[i]-x1)==abs(y[i]-y1) ){
-						cout<<"YES\n";
-						return 0;
+						flag=1;
 					};break;
 			case 'R':if( (x[i]-x1)==0 || (y[i]-y1==0) ){
-						cout<<"YES\n";
-						return 0;
+						flag=1;
 					};break;
 			case 'Q':if( abs(x[i]-x1)==abs(y[i]-y1) || ( x[i]-x1==0||y[i]-y1==0) ){
-						cout<<"YES\n";
-						return 0;
+						flag=1;
 					}
 			default: break;
 			
 		}
 	}
-	cout<<"NO\n";
+	if(flag==0){
+		cout<<"NO\n";
+	}
 	return 0;
 }

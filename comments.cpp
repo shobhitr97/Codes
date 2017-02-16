@@ -10,7 +10,7 @@ vv com;
 vector< vi > com_heirarchy;
 vec str;
 vi cind;
-int n,max_level;
+int n,max_level,t;
 
 int dfs(int index,int num,int level){
 	
@@ -54,10 +54,12 @@ int main(){
 		com.push_back(str);
 
 		ch=getchar();
+		t=0;
 		while(ch!=','&&ch!=' '&&ch!='\n'){
-			cind.push_back(ch-'0');
+			t=( (t*10) + (ch-'0') );
 			ch=getchar();
 		}
+		cind.push_back(t);
 		i++;
 		if(ch==' '||ch=='\n'){
 			break;

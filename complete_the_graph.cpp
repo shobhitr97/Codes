@@ -43,7 +43,7 @@ void initialize_(ll *pt,int val){
 		pt[i]=val;
 	}
 }
-void initialize_(int *pt,int val){
+void initialize_(INT_MAX *pt,int val){
 	int i;
 	for(i=0;i<=1000;i++){
 		pt[i]=val;

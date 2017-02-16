@@ -25,9 +25,9 @@ ll ab(int a,int b,int mod){
 
 int main(){
 	string ss;
-	char s[300005],f[300005];
+	char s[300005],f[300005];	
 	int i,check[300005],k,val1,val2,mlen,length,last_index;
-	ll ans[300005],sum,h1[300005],h2[300005];
+	ll ans[300005],sum,h1[300005],h2[300005],c1,c2;
 	scanf("%s %s\n",s,f);
 
 	i=0,val1=0,val2=0;
@@ -37,35 +37,54 @@ int main(){
 		i++;  
 	}
  	mlen=i;
-
+    cout<<mlen<<" "<<val1<<" "<<val2<<"\n";
 	i=0;
-	// while(s[i]!='\0'){
-	// 	str[i]=s[i]-'a';
-	// 	i++;
-	// }
-	// length = i;
+	while(s[i]!='\0'){
+// 		str[i]=s[i]-'a';
+		i++;
+	}
+	length = i;
 	
+	
+	cout<<mod1<<"\n";
 	h1[0]=0;
 	for(i=0;i<mlen;i++){
 		h1[0]= ( ( h1[0]*26 )%mod1 + ( s[i]-'a') )%mod1;
+		
 		k--;
 	}
-
+	cout<<h1[0]<<" ";
+    i=1;
+    c1=ab(26,mlen-1,mod1);
 	while(i>=0&&i<length-mlen+1){
-		h1[i] = ( ( ( h1[i-1] -  ( ( s[i-1]-'a') * ab(26,mlen-1,mod1) )%mod1 )*26 )%mod1 + ( s[i+mlen-1]-'a') )%mod1;
+		h1[i] = ( ( ( h1[i-1] -  ( ( s[i-1]-'a') * c1 )%mod1 )*26 )%mod1 + ( s[i+mlen-1]-'a') )%mod1;
+		if(h1[i]<0){
+		    h1[i]+=mod1;
+		}
+		cout<<h1[i]<<" ";
+		
 		i++;
 	}
-
+    cout<<"\n";
+    cout<<mod2<<"\n";
 	h2[0]=0;
 	for(i=0;i<mlen;i++){
-		h2[0]= ( ( h2[0]*26 )%mod2 + ( s[i]-'a') )%mod2;	
+		h2[0]= ( ( h2[0]*26 )%mod2 + ( s[i]-'a') )%mod2;
+		
 	}
-
+	cout<<h2[0]<<" ";
+    i=1;
+    c2=ab(26,mlen-1,mod2);
 	while(i>=0&&i<length-mlen+1){
-		h2[i] = ( ( ( h2[i-1] -  ( ( s[i-1]-'a' ) * ab(26,mlen-1,mod2) )%mod2 )*26 )%mod2 + ( s[i+mlen-1]-'a' ) )%mod2;
+		h2[i] = ( ( ( h2[i-1] -  ( ( s[i-1]-'a' ) * c2 )%mod2 )*26 )%mod2 + ( s[i+mlen-1]-'a' ) )%mod2;
+		if(h2[i]<0){
+		    h2[i]+=mod2;
+		}
+		cout<<h2[i]<<" ";
 		i++;
 	}
-	 
+	cout<<"\n";
+	
 	for(i=0;i<length;i++){
 		check[i] = (i+mlen<length+1) && (h1[i]==val1) && (h2[i]==val2) ;
 		if(check[i]){
