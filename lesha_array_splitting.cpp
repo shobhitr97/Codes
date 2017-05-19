@@ -1,50 +1,57 @@
 #include<iostream>
+#include<vector>
 
 using namespace std;
 
 int main(){
 
-	int n,k,a[105],l[105],r[105],sum,sump,beg,i;
+	int n, a[105], sum, i, c, d, count;
+	vector<int>  l, r;
 
 	cin>>n;
 
-	sum=0;
-	for(i=1;i<=n;i++){
+	for( i=0 ; i<n ; i++ ){
 		cin>>a[i];
-		sum+=a[i];
 	}
 
-	l[0]=1;
-	i=1;
-	while(a[i]==0&&i<=n){
-		i++;
+	sum = 0;
+	c = 0;
+	d = 0;
+	while( a[d] == 0 && d < n){
+		d++;
 	}
 
-	if(sum==0&&i==(n+1)){
+	if( d == n ){
 		cout<<"NO\n";
 		return 0;
 	}
-	cout<<"YES\n";
-	// beg=i;
-	sump=0;
-	k=0;
-	while(i<=n){
-		sump+=a[i];
-		if(a[i]!=0&&sump==0){
-			r[k]=i-1;
-			k++;
-			l[k]=i;
-			sump=0;
+
+	count = 0;
+	for( i=d ; i<n ; i++ ){
+
+		if( sum + a[i] == 0 ){
+			l.push_back(c+1);
+			r.push_back(d+1);
+			sum = a[i];
+			c = i;
+			d = i;
+			count++;
 		}
-		i++;
+		else{
+			sum += a[i];
+			d = i;
+		}
+
 	}
-	r[k]=n;
+	l.push_back(c+1);
+	r.push_back(d+1);
+	count++;
 
-	cout<<k+1<<"\n";
-
-	for(i=0;i<=k;i++){
+	cout<<"YES\n";
+	cout<<count<<"\n";	
+	for( i=0 ; i<count ; i++ ){
 		cout<<l[i]<<" "<<r[i]<<"\n";
 	}
-
+	
 	return 0;
 }
