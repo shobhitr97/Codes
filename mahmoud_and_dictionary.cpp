@@ -1,235 +1,152 @@
 #include<iostream>
 #include<map>
-#include<cstdio>
 #include<vector>
+#include<utility>
+#include<stdio.h>
+#include<cstdlib>
+#include<algorithm>
+#include<string>
 
 using namespace std;
 
-typedef vector <int> vec;
-typedef vector < vector<int> > vvec;
+typedef vector< int> vec;
+typedef vector< vector<int> > vvec;
+typedef map<string,  int> mps;
+typedef pair<int, int> pp;
 
+#define ii insert
+#define mp make_pair
+#define pb push_back
+#define for(a,b) for( int i=a ; i<b ; i++ )
+#define num 100005
 
-map <string,int> dict;
-vvec rels;
-vvec rela;
-bool vis[100005],val[100005];
-int parent[100005];
-// void dfs(int index, int value, int parent ){
+int n, m, q, par[num], val[num];
+mps index;
 
-// 	if(vis)
+//iterative function takes almost the same amount of time but does not evaluate the vlues and parents for those in paths
+// pp find_in( int ind ){
 
+// 	int i, x;
+
+// 	i = ind;
+// 	x = 0;
+// 	while( par[i] != i ){
+// 		x = (x + val[i])%2;
+// 		i = par[i];
+// 	}
+// 	// val[ind] = x;
+// 	// par[ind] =  
+// 	return mp(i, x);
 // }
 
-// antonym -> 0
-// synonym -> 1
-
-void printt(vec vv){
-	vec::iterator it;
-	for( it=vv.begin() ; it != vv.end() ; it++ ){
-		cout<<*it<<" ";
-	}
-	cout<<"\n";
-}
-
-void printt(int arr[],int n){
-	int i;
-
-	for( i=1 ; i<=n ;i++){
-		cout<<arr[i] <<" ";
-	}
-	cout<<"\n";
-}
-
-void printt(bool arr[],int n){
-	int i;
-
-	for( i=1 ; i<=n ;i++){
-		cout<<arr[i] <<" ";
-	}
-	cout<<"\n";
-}
-
-int par(int x){
+int find_in(int ind){
 	
-	while(parent[x] != x ){
-		x = parent[parent[x]];
+	if( par[ind] == ind ){
+		return val[ind];
 	}
-}
 
-int value(int x){
-	int t=x;
-	bool c=val[x];
-	while( parent[t] != t ){
-		if(val[parent[t]] == 0 ){
-			c = (!c);
-		}
-		t=parent[t];	
-	}
-	return c;
+	val[ind] = (val[ind] + find_in(par[ind]))%2;
+	par[ind] = par[ par[ind] ];
+	return val[ind];
+
 }
 
 int main(){
-	
-	int n, m, q, i, x, y, z, par_x, par_y, val_x, val_y;
-	string str,a,b,mem[100005];
 
-	cin>>n>>m>>q;
+	cin >> n >> m >> q;
 
-	rels.resize(n+3);
-	rela.resize(n+3);
+	int i, x, ind1, ind2;
+	string r, s;
+	pp temp1, temp2;
 
-	for( i=1 ; i<= n ;i++ ){
-
-		cin>>mem[i];
-		dict.insert( make_pair( mem[i] , i ) );
-		// mem[i]=str;
-
+	for(0,n){
+		cin>> r;
+		index.ii(mp(r,i));
+		par[i] = i;
+		val[i] = 0;
 	}
 
-	for( i=1 ; i<=n ; i++ ){
-		vis[i]=0;
-		parent[i]=i;
-	}
+	for(0,m){
+		cin >> x >> r >> s;
 
-	for( i=1 ; i<=m ; i++ ){
-		
-		cin>>z;
-		cin>>a>>b;
+		x = (x==2);
 
-		x = dict[a];
-		y = dict[b];
+		ind1 = index[r];
+		ind2 = index[s];
 
-		par_x=par(x);
-		par_y=par(y);
+		temp1 = mp(0,0);
+		temp2 = mp(0,0);
 
-		// validity check
-		if( vis[ x ] == 1 && vis[ y ] == 1 ){
-			val_x = value(x);
-			val_y = value(y);
-			// cout<<"Value x:"<<val_x<<a<<" Value y:"<<val_y<<b<<"\n";
-			if(par_x == par_y ){
-				if(z==1){
-					if(val_x != val_y ){
-						cout<<"NO\n";
-						continue;
-					}
-				}
-				else{
-					if(val_x == val_y ){
-						cout<<"NO\n";
-						continue;
+		temp1.second = find_in(ind1);
+		temp2.second = find_in(ind2);
+		temp1.first = par[ind1];
+		temp2.first = par[ind2];
 
-					}
-				}
+		// cout<<"\n";
+		// cout<<r<<"---par1:"<<temp1.first<<" ;"<<"val1:"<<temp1.second<<"\n";
+		// cout<<s<<"---par2:"<<temp2.first<<" ;"<<"val2:"<<temp2.second<<"\n";
+
+		if( temp1.first != temp2.first ){
+			cout<<"YES\n";
+			// Observation : the value of val[temp_.first] must be 0 !
+			if( temp2.second != val[temp2.first] ){
+				val[temp2.first] = ( val[temp2.first] + temp1.second + x + 1)%2;
 			}
 			else{
-				
-				// change in values of val due to change in ancestors
-				/*If all the values do not come in sync then change the value of par(y) to zero
-				  That would rectify the value of the parent and for all it's generations as they are aware that they have to take the complement
-				  if the value of par(y) is zero
-				*/
-				
-				if(z==1){
-					if(val_x != val_y ){
-						val[par_y]=0;
-					}
-				}
-				else{
-					if( val_x == val_y ){
-						val[par_y]=0;
-					}
-				}
-					
-				parent[par_y]=par_x;
-
+				val[temp2.first] = ( val[temp2.first] + temp1.second + x)%2;
 			}
-
-		}
-		else{
-
-			if ( !vis[x] && !vis[y] ){
-				
-				parent[x] = x;
-				parent[y] = x;
-				val[x] = 1;
-				val[y] = (z==1);
 			
-			}
-			else{
-				
-				if(vis[x]){
-					
-					if(z==1){
-						val[y]=val[x];
-					}
-					else{
-						val[y] = (!val[x]);
-					}
-					parent[y]=parent[x];
-		
-				}
-				else{
-					
-					if(z==1){
-						val[x]=val[y];
-					}
-					else{
-						val[x] = (!val[y]);
-					}
-					parent[x]=parent[y];
-		
-				}
-		
-			}
-		
-		}
+			par[temp2.first] = temp1.first;
+			
+			par[ind1] = temp1.first;
+			val[ind1] = temp1.second;
 
-		vis[x]=1;
-		vis[y]=1;
+			par[ind2] = temp1.first;
+			val[ind2] = (temp2.second + val[temp2.first])%2;
 
-		if(z==1){
-			rels[ x ].push_back( y );
-			rels[ y ].push_back( x );
 		}
 		else{
-			rela[ x ].push_back( y );
-			rela[ y ].push_back( x );			
+			if( (temp2.second)^(temp1.second) == x ){
+				cout<<"YES\n";
+			}
+			else{
+				cout<<"NO\n";
+			}
 		}
-		cout<<"YES\n";
-		// printt(parent,n);
-		// printt(val,n);
-		// printt(vis,n);
+		// temp1 = find_in(index[r]);
+		// temp2 = find_in(index[s]);
+		// cout<<"\n";
+		// cout<<r<<"---par1:"<<temp1.first<<" ;"<<"val1:"<<temp1.second<<"\n";
+		// cout<<s<<"---par2:"<<temp2.first<<" ;"<<"val2:"<<temp2.second<<"\n";
+
 	}
 
+	for(0,q){
+		cin>>r>>s;
+		
+		ind1 = index[r];
+		ind2 = index[s];
 
-	for( i=0 ; i<q ; i++ ){
-		cin>>a>>b;
-		x = dict[a];
-		y = dict[b];
-	
-		if( vis[x]==0 || vis[y]==0 ){
+		temp1.second = find_in(ind1);
+		temp2.second = find_in(ind2);
+		temp1.first = par[ind1];
+		temp2.first = par[ind2];
+
+		if( temp1.first != temp2.first ){
 			cout<<"3\n";
 		}
 		else{
-			
-			if( par(x) != par(y) ){
-				cout<<"3\n";
+			if( temp2.second^temp1.second ){
+				cout<<"2\n";
 			}
 			else{
-				
-				if( value(x) != value(y) ){
-					cout<<"2\n";
-				}
-				else{
-					cout<<"1\n";
-				}
-	
+				cout<<"1\n";
 			}
-		
 		}
-	
+
 	}
+
+	
 
 	return 0;
 }
