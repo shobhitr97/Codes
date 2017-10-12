@@ -101,5 +101,13 @@ int main(){
 		rel.clear();
 	}
 	fori(0, TT)	cout<<output[i]<<"\n";
+	cin>>t;
+	while(t--){
+		cin>>n>>m>>K;
+		fori(1, n+1)	cin>>pop[i];	
+		fori(0, m){
+			cin>>u>>v>>c;
+		}
+	}
 	return 0;
 }
