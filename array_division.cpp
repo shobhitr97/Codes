@@ -67,7 +67,7 @@ int main(){
 				}
 			}
 			if(diff.find((-2)*a[i])!=diff.end() ){
-				if(i<diffIndex[(-2)*a[i] ]){
+					if(i<diffIndex[(-2)*a[i] ]){
 					flag=true;
 					break;
 				}
