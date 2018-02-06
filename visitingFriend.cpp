@@ -1,15 +1,13 @@
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <utility>
-#include <stdio.h>
-#include <set>
-#include <map>
-#include <cmath>
-#include <cstring>
-#include <queue>
-#include <stack>
-#include <functional>
+#include<iostream>
+#include<vector>
+#include<algorithm>
+#include<utility>
+#include<stdio.h>
+#include<set>
+#include<map>
+#include<cmath>
+#include<queue>
+#include<stack>
 
 using namespace std;
 
@@ -33,5 +31,32 @@ typedef set<int> si;
 #define INF 1000000007
 
 int main(){
+	int n, m, a[105], b[105], limit;
+	bool flag = true;
+
+	cin>>n>>m;
+
+	fori(0, n){
+		cin>>a[i]>>b[i];
+	}
+
+	limit = 0;
+	fori(0, n){
+		if(limit >= m){
+			break;
+		}
+		if(a[i]	 > limit){
+			flag = false;
+			break;
+		}
+		else	limit = max(limit, b[i]);
+		if(limit >= m){
+			break;
+		}
+	}
+
+	if(flag == true)	cout<<"YES\n";
+	else	cout<<"NO\n";
+
 	return 0;
 }

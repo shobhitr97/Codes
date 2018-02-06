@@ -32,6 +32,67 @@ typedef set<int> si;
 #define se second
 #define INF 1000000007
 
+int ind, k, limit;
+vi a;
+bool fff;
+
+bool f(int sum, int places){
+	if(places == 2){
+		fori(0, sum+1){
+			ind++;
+			if(ind == k){
+				a.pb(sum-i);
+				a.pb(i);
+				// cout<<(sum-i)<<i<<"<-"<<places<<"\n";
+				return true;
+			}
+		}
+	}
+	else{
+		fori(0, sum+1){
+			if(f(sum-i, places-1) == true){
+				a.pb(i);
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
 int main(){
+
+	cin>>k;
+
+	bool flag = false;
+
+	int x = 2;
+	ind = 0;
+	fori(1, 10){
+		ind++;
+		if(ind == k){
+			a.pb(10-i);
+			a.pb(i);
+			flag = true;
+			break;
+		}
+	}
+	if(flag == false){
+		while(1){
+			fori(1, 10){
+				if(f(10-i, x) == true){
+					a.pb(i);
+					flag = true;
+					break;
+				}
+			}
+			if(flag == true)	break;
+			x++;
+		}
+	}
+
+	int siz = a.size();
+	forin(siz-1, 0)	cout<<a[i];
+	cout<<"\n";
+
 	return 0;
 }

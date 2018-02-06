@@ -33,5 +33,41 @@ typedef set<int> si;
 #define INF 1000000007
 
 int main(){
+
+	int T, n, t;
+	vector<vi> out;
+	vi l, r;
+
+	cin>>T;
+	out.resize(T);
+	forn(k, 0, T){
+		cin>>n;
+		l.resize(n);
+		r.resize(n);
+		fori(0, n)	cin>>l[i]>>r[i];
+		t = 1;
+		fori(0, n){
+			if(t <= l[i]){
+				out[k].pb(l[i]);
+				t = l[i]+1;
+			}
+			else{
+				if(t > r[i])	out[k].pb(0);
+				else{
+					out[k].pb(t);
+					t++;
+				}
+			}
+		}
+		l.clear();
+		r.clear();
+	}
+
+	fori(0, T){
+		int siz = out[i].size();
+		forn(j, 0, siz)	cout<<out[i][j]<<" ";
+		cout<<"\n";
+	}
+
 	return 0;
 }

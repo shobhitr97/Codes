@@ -31,7 +31,41 @@ typedef set<int> si;
 #define fi first
 #define se second
 #define INF 1000000007
+#define NUM 5005
 
 int main(){
+
+	string s;
+
+	cin>>s;
+
+	int ans = 0;
+	int canTurn, openBrackets, len = s.length();
+	fori(0, len){
+		openBrackets=0;
+		canTurn=0;
+		forn(j, i, len){
+			if( s[j] == '(' )	openBrackets++;
+			else if(s[j] == ')'){
+				if(openBrackets)	openBrackets--;
+				else if(canTurn){
+					canTurn--;
+					openBrackets++;
+				}
+				else	break;
+			}
+			else{
+				if(openBrackets){
+					openBrackets--;
+					canTurn++;
+				}
+				else	openBrackets++;
+			}
+			if(openBrackets == 0)	ans++;
+		}
+	}
+
+	cout<<ans<<"\n";
+
 	return 0;
 }

@@ -1,0 +1,103 @@
+Preprocessing directives :
+
+pp_expression =	[whitespace], pp_or_expression, [whitespace];
+pp_or_expression = pp_and_expression | pp_or_expression, [whitespace], '||', [whitespace], pp_and_expression;
+pp_and_expression =	pp_equality_expression | pp_and_expression, [whitespace], '&&', [whitespace], pp_equality_expression;
+pp_equality_expression = pp_unary_expression | pp_equality_expression, [whitespace], '==', [whitespace], pp_unary_expression | pp_equality_expression, [whitespace], '!=', [whitespace], pp_unary_expression;
+pp_unary_expression = pp_primary_expression | '!', [whitespace], pp_unary_expression;
+pp_primary_expression = 'true' | 'false' | conditional_symbol | '(', [whitespace], pp_expression, [whitespace], ')';
+pp_conditional = pp_if_section, [pp_elif_sections], [pp_else_section], pp_endif;
+pp_if_section =	[whitespace], '#', [whitespace], 'if', whitespace, pp_expression, pp_new_line, [conditional_section];
+pp_elif_sections = pp_elif_section | pp_elif_sections, pp_elif_section;
+pp_elif_section = [whitespace], '#', [whitespace], 'elif', whitespace, pp_expression, pp_new_line, [conditional_section];
+pp_else_section = [whitespace], '#', [whitespace], 'else', pp_new_line, [conditional_section];
+pp_endif = [whitespace], '#', [whitespace], 'endif', pp_new_line;
+conditional_section = input_section | skipped_section;
+skipped_section = skipped_section_part | skipped_section, skipped_section_part;
+skipped_section_part = [skipped_characters], new_line | pp_directive;
+skipped_characters = [whitespace], not_number_sign, [input_characters];
+not_number_sign = ?Any input_character except #?;
+pp_diagnostic =	[whitespace], '#', [whitespace], 'error', pp_message | [whitespace], '#', [whitespace], 'warning', pp_message;
+pp_message = new_line | whitespace, [input_characters], new_line;
+pp_region =	pp_start_region, [conditional_section], pp_end_region;
+pp_start_region = [whitespace], '#', [whitespace], 'region', pp_message;
+pp_end_region =	[whitespace], '#', [whitespace], 'endregion', pp_message;
+pp_line = [whitespace], '#', [whitespace], 'line', whitespace, line_indicator, pp_new_line;
+line_indicator = decimal_digits, whitespace, file_name | decimal_digits | 'default' | 'hidden';
+file_name =	'"', file_name_characters, '"';
+file_name_characters = file_name_character | file_name_characters, file_name_character;
+file_name_character = ?Any input_character except "?;
+pp_pragma =	[whitespace], '#', [whitespace], 'pragma', whitespace, pragma_body, pp_new_line;
+pragma_body = pragma_warning_body;
+pragma_warning_body = 'warning', whitespace, warning_action | 'warning', whitespace, warning_action, whitespace, warning_list;
+warning_action = 'disable' | 'restore';
+warning_list = decimal_digits | warning_list, [whitespace], ',', [whitespace], decimal_digits;
+
+Floating point:
+
+floating_point_type = 'float' | 'double';
+
+Lambda expressions:
+
+lambda_expression = anonymous_function_signature, '=>', anonymous_function_body;
+anonymous_function_signature = explicit_anonymous_function_signature | implicit_anonymous_function_signature;
+explicit_anonymous_function_signature = '(', [explicit_anonymous_function_parameter_list], ')';
+explicit_anonymous_function_parameter_list = explicit_anonymous_function_parameter | explicit_anonymous_function_parameter_list, ',', explicit_anonymous_function_parameter;
+explicit_anonymous_function_parameter =	[anonymous_function_parameter_modifier], type, identifier;
+anonymous_function_parameter_modifier =	'ref' | 'out';
+implicit_anonymous_function_signature =	'(', [implicit_anonymous_function_parameter_list], ')' | implicit_anonymous_function_parameter;
+implicit_anonymous_function_parameter_list = implicit_anonymous_function_parameter | implicit_anonymous_function_parameter_list, ',', implicit_anonymous_function_parameter;
+implicit_anonymous_function_parameter =	identifier;
+anonymous_function_body = expression | block;
+
+Query expressions:
+
+query_expression = from_clause, query_body;
+from_clause = 'from', [type], identifier, 'in', expression;
+query_body = [query_body_clauses], select_or_group_clause, [query_continuation];
+query_body_clauses = query_body_clause | query_body_clauses, query_body_clause;
+query_body_clause = from_clause | let_clause | where_clause | join_clause | join_into_clause | orderby_clause;
+let_clause = 'let', identifier, '=', expression;
+where_clause = 'where', boolean_expression;
+join_clause = 'join', [type], identifier, 'in', expression, 'on', expression, 'equals', expression;
+join_into_clause = 'join', [type], identifier, 'in', expression, 'on', expression, 'equals', expression, 'into', identifier;
+orderby_clause = 'orderby', orderings;
+orderings =	ordering | orderings, ',', ordering;
+ordering = expression, [ordering_direction];
+ordering_direction = 'ascending' | 'descending';
+select_or_group_clause = select_clause | group_clause;
+select_clause = 'select', expression;
+group_clause = 'group', expression, 'by', expression;
+query_continuation = 'into', identifier, query_body;
+
+Specific catch clauses:
+
+specific_catch_clauses = specific_catch_clause | specific_catch_clauses, specific_catch_clause;
+specific_catch_clause = 'catch', '(', class_type, [identifier], ')', block;
+
+Properties:
+
+property_declaration = [property_modifiers], type, member_name, '{', accessor_declarations, '}';
+property_modifiers = property_modifier | property_modifiers, property_modifier;
+property_modifier = 'new' | 'public' | 'protected' | 'private' | 'static' | 'virtual' | 'sealed' | 'override' | 'abstract';
+
+Accessor:
+
+accessor_declarations = get_accessor_declaration, [set_accessor_declaration] | set_accessor_declaration, [get_accessor_declaration];
+get_accessor_declaration = [accessor_modifier], 'get', accessor_body;
+set_accessor_declaration = [accessor_modifier], 'set', accessor_body;
+accessor_modifier = 'protected' | 'private';
+accessor_body = block | ';';
+
+Indexer:
+
+indexer_declaration = [indexer_modifiers], indexer_declarator, '{', accessor_declarations, '}';
+indexer_modifiers =	indexer_modifier | indexer_modifiers, indexer_modifier;
+indexer_modifier = 'new' | 'public' | 'protected' | 'private' | 'virtual' | 'sealed' | 'override' | 'abstract';
+indexer_declarator = type, 'this', '[', formal_parameter_list, ']' | type, interface_type, '.', 'this', '[', formal_parameter_list, ']';
+
+Static , Abstract, Virtual, Override, Sealed removed:
+
+static_constructor_declaration = static_constructor_modifiers, identifier, '(', ')', static_constructor_body;
+static_constructor_modifiers = 'static';
+static_constructor_body = block | ';';

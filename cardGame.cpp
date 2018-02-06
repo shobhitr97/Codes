@@ -31,7 +31,36 @@ typedef set<int> si;
 #define fi first
 #define se second
 #define INF 1000000007
+#define num 100005
 
 int main(){
+
+	int count[num], a[num], n, siz, winner;
+	vi dist;
+
+	cin>>n;
+
+	memset(a, 0, sizeof(a));
+
+	fori(0, n){
+		scanf("%d", &a[i]);
+		count[a[i]]++;
+		if(count[a[i]] == 1)	dist.pb(a[i]);
+	}
+
+	sort(dist.begin(), dist.end(), greater<int>());
+
+	siz = dist.size();
+	winner = 1;
+	fori(0, siz){
+		if(count[dist[i]]&1){
+			winner = 0;
+			break;
+		}
+	}
+
+	if(winner == 0)	cout<<"Conan\n";
+	else	cout<<"Agasa\n";
+
 	return 0;
 }

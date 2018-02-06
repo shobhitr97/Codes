@@ -33,5 +33,24 @@ typedef set<int> si;
 #define INF 1000000007
 
 int main(){
+	map <string, string> mp;
+	int n, m;
+	string x, y, z;
+
+	cin>>n>>m;
+
+	fori(0, n){
+		cin>>x>>y;
+		y.append(";");
+		mp.insert(pair<string, string>(y, x));
+		// cout<<x<<"->"<<y<<"\n";
+	}
+
+	fori(0, m){
+		cin>>x>>y;
+		z = mp[y];
+		cout<<x<<" "<<y<<" #"<<z<<"\n";
+	}
+
 	return 0;
 }

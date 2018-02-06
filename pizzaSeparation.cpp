@@ -1,15 +1,13 @@
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <utility>
-#include <stdio.h>
-#include <set>
-#include <map>
-#include <cmath>
-#include <cstring>
-#include <queue>
-#include <stack>
-#include <functional>
+#include<iostream>
+#include<vector>
+#include<algorithm>
+#include<utility>
+#include<stdio.h>
+#include<set>
+#include<map>
+#include<cmath>
+#include<queue>
+#include<stack>
 
 using namespace std;
 
@@ -33,5 +31,23 @@ typedef set<int> si;
 #define INF 1000000007
 
 int main(){
+	int n, a[365], minDiff;
+
+	cin>>n;
+	fori(0, n)	cin>>a[i];
+
+	minDiff = 360;
+	forn(i, 0, n){
+		int sum=a[i], j=(i+1)%n;
+		minDiff = min(minDiff, abs(360 - 2*sum));
+		while(j != i && minDiff > 0){
+			sum+=a[j];
+			minDiff = min(minDiff, abs(360 - 2*sum));
+			j=(j+1)%n;
+		}
+	}
+
+	cout<<minDiff<<"\n";
+
 	return 0;
 }

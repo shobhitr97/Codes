@@ -1,15 +1,13 @@
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <utility>
-#include <stdio.h>
-#include <set>
-#include <map>
-#include <cmath>
-#include <cstring>
-#include <queue>
-#include <stack>
-#include <functional>
+#include<iostream>
+#include<vector>
+#include<algorithm>
+#include<utility>
+#include<stdio.h>
+#include<set>
+#include<map>
+#include<cmath>
+#include<queue>
+#include<stack>
 
 using namespace std;
 
@@ -33,5 +31,13 @@ typedef set<int> si;
 #define INF 1000000007
 
 int main(){
+	int t;
+	cin>>t;
+
+	double n, k;
+	while(t--){
+		cin>>n>>k;
+		printf("%.9lf\n",(double)(2.000000)*(n-(n-1)/k));
+	}
 	return 0;
 }

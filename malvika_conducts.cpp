@@ -1,15 +1,13 @@
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <utility>
-#include <stdio.h>
-#include <set>
-#include <map>
-#include <cmath>
-#include <cstring>
-#include <queue>
-#include <stack>
-#include <functional>
+#include<iostream>
+#include<vector>
+#include<algorithm>
+#include<utility>
+#include<stdio.h>
+#include<set>
+#include<map>
+#include<cmath>
+#include<queue>
+#include<stack>
 
 using namespace std;
 
@@ -33,5 +31,17 @@ typedef set<int> si;
 #define INF 1000000007
 
 int main(){
+	int t, n, m;
+	cin>>t;
+	forn(T, 0, t){
+		cin>>n>>m;
+		if(n==1)	cout<<"0\n";
+		else{
+			if(n==2)	cout<<m<<"\n";
+			else{
+				cout<<(2*m-1+n-2)<<"\n";
+			}
+		}
+	}
 	return 0;
 }

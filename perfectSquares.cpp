@@ -32,6 +32,34 @@ typedef set<int> si;
 #define se second
 #define INF 1000000007
 
+bool check(int x){
+	if(x<0)	return true;
+	double y = sqrt((double)x);
+	double yi = floor(y);
+	if(y-yi > 0.0)	return true;
+	return false;
+}
+
 int main(){
+
+	int n;
+	vi a;
+
+	scanf("%d", &n);
+
+	a.resize(n);
+	fori(0, n){
+		scanf("%d", &a[i]);
+	}
+
+	sort(a.begin(), a.end());
+
+	forin(n-1, 0){
+		if(check(a[i]) == true){
+			cout<<a[i]<<"\n";
+			break;
+		}
+	}
+
 	return 0;
 }

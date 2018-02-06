@@ -6,7 +6,6 @@
 #include <set>
 #include <map>
 #include <cmath>
-#include <cstring>
 #include <queue>
 #include <stack>
 #include <functional>
@@ -33,5 +32,20 @@ typedef set<int> si;
 #define INF 1000000007
 
 int main(){
+	int n, k, x[105], ans = 0;
+	cin>>n>>k;
+
+	fori(0, n){
+		cin>>x[i];
+	}
+
+	fori(0, n){
+		if(k%x[i] == 0){
+			ans = max(ans, x[i]);
+		}
+	}
+
+	cout<<(k/ans)<<"\n";
+
 	return 0;
 }

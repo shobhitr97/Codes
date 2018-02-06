@@ -33,5 +33,27 @@ typedef set<int> si;
 #define INF 1000000007
 
 int main(){
+
+	int t, n, k, ans, T;
+	vi x, out;
+
+	cin>>T;
+
+	forn(t, 0, T){
+		cin>>n>>k;
+		x.resize(k);
+		fori(0, k)	scanf("%d", &x[i]);
+		ans = 0;
+		fori(0, k){
+			if(i == 0)	ans = max(ans, x[i]);
+			else	ans = max(ans, (x[i]-x[i-1]+1)/2 + 1*((x[i]-x[i-1]+1)%2 == 1));
+			if(i == k-1)	ans = max(ans, n+1-x[i]);
+		}
+		out.pb(ans);
+		x.clear();
+	}
+
+	fori(0, T)	cout<<out[i]<<"\n";
+
 	return 0;
 }

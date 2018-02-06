@@ -33,5 +33,19 @@ typedef set<int> si;
 #define INF 1000000007
 
 int main(){
+
+	int n, m;
+	double a, b, minm = INF;
+
+
+	scanf("%d %d", &n, &m);
+
+	fori(0, n){
+		cin>>a>>b;
+		minm = min(minm, (((double)m)*a/b));
+	}
+
+	printf("%.10f\n", minm);
+
 	return 0;
 }

@@ -33,5 +33,35 @@ typedef set<int> si;
 #define INF 1000000007
 
 int main(){
+
+	int n, a, b, c;
+
+	cin>>n;
+
+	if(n <= 2){
+		if(n==1){
+			cout<<"O\n";
+		}
+		else{
+			cout<<"OO\n";
+		}
+		return 0;
+	}
+
+	cout<<"OO";
+	a = 1;
+	b = 2;
+	c = 3;
+	fori(3, n+1){
+		if( i == c){
+			cout<<"O";
+			a = b;
+			b = c;
+			c = a+b;
+		}
+		else	cout<<"o";
+	}
+	cout<<"\n";
+
 	return 0;
 }
